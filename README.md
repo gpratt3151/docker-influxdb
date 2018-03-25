@@ -15,8 +15,8 @@ curl -XPOST "http://localhost:8086/query" --data-urlencode "q=CREATE DATABASE my
 
 ### Insert some data
 Some things to note:
-1. Posting of metric data requires nanoseconds accuracy or at least seconds since epoch + 9 zero's
-2. Posting of the "Annotation" cannot be in nanoseconds accuracy and *must* be seconds since epoch
+1. Posting of metric data requires nanoseconds accuracy or at least seconds since epoch + 9 zero's `date +%s%N`
+2. Posting of the "Annotation" cannot be in nanoseconds accuracy and *must* be seconds since epoch `date +%s`
 
 ```bash
 curl -XPOST "http://localhost:8086/write?db=mydb" \
