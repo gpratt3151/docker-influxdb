@@ -27,27 +27,49 @@ If you do not have nanoseconds simply append 9 zeros to the seconds since epoch 
 1521955132000000000
 ```
 
-## Insert some data
+## Simulate some data
 ```bash
-curl -XPOST "http://localhost:8086/write?db=mydb" \
--d 'cpu,host=server01,region=uswest load=42 '$(date +%s%N)
-sleep 2
-curl -XPOST "http://localhost:8086/write?db=mydb" \
--d 'cpu,host=server02,region=uswest load=78 '$(date +%s%N)
-sleep 1
-curl -XPOST "http://localhost:8086/write?db=mydb" \
--d 'cpu,host=server02,region=uswest load=78 '$(date +%s%N)
+# Simulate high CPU
+for i in 1 2 3 4 5 6
+do
+  sleep 5 
+  LOAD=$(curl -s 'https://www.random.org/integers/?num=1&min=75&max=100&col=1&base=10&format=plain&rnd=new')
+  curl -XPOST "http://localhost:8086/write?db=mydb" \
+  -d "cpu,host=server01,region=uswest load=${LOAD} $(date +%s)000000000"
+done
+
+# Simulate deploying an upgrade
 curl -XPOST "http://localhost:8086/write?db=mydb&precision=s" \
---data-binary 'events title="Deployed v10.2.0",text="<a href='https://github.com'>Release notes</a>",tags="these,are,the,tags" '$(date +%s)
-sleep 2
+--data-binary 'events title="Deployed v10.2.0",text="<a href='https://github.com'>Release notes</a>",tags="Std Change,Servers,Infra,Upgrade,gpratt" '$(date +%s)
+sleep 5
+
+# Simulate reboot
 curl -XPOST "http://localhost:8086/write?db=mydb" \
--d 'cpu,host=server03,region=useast load=15.4 '$(date +%s%N)
-sleep 2
+-d "cpu,host=server01,region=uswest load=0 $(date +%s)000000000"
+
+for i in 1 2 3 4 5 6
+do
+  sleep 5 
+  LOAD=$(curl -s 'https://www.random.org/integers/?num=1&min=40&max=49&col=1&base=10&format=plain&rnd=new')
+  curl -XPOST "http://localhost:8086/write?db=mydb" \
+  -d "cpu,host=server01,region=uswest load=${LOAD} $(date +%s)000000000"
+done
+
+curl -XPOST "http://localhost:8086/write?db=mydb&precision=s" \
+--data-binary 'events title="Deployed v10.2.1",text="<a href='https://github.com'>Release notes</a>",tags="Emg Change,Servers,Infra,Patch,amerritt" '$(date +%s)
+sleep 5
+# Simulate reboot
 curl -XPOST "http://localhost:8086/write?db=mydb" \
--d 'cpu,host=server03,region=useast load=16 '$(date +%s%N)
-sleep 1
-curl -XPOST "http://localhost:8086/write?db=mydb" \
--d 'cpu,host=server03,region=useast load=13 '$(date +%s%N)
+-d "cpu,host=server01,region=uswest load=0 $(date +%s)000000000"
+sleep 5
+
+while :
+do
+  LOAD=$(curl -s 'https://www.random.org/integers/?num=1&min=1&max=29&col=1&base=10&format=plain&rnd=new')
+  curl -XPOST "http://localhost:8086/write?db=mydb" \
+  -d "cpu,host=server01,region=uswest load=${LOAD} $(date +%s%N)"
+  sleep 5
+done
 ```
 
 ## Grafana Configuration
