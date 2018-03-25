@@ -2,9 +2,11 @@
 Docker InfluxDB configuration
 
 ## Basis of this work
-[influxdata/influxdb](https://github.com/influxdata/influxdb).
+[GitHub project: influxdata/influxdb](https://github.com/influxdata/influxdb).
+
 [Creating Grafana Annotations with InfluxDB](https://maxchadwick.xyz/blog/grafana-influxdb-annotations).
-[Using InfluxDB in Grafana > Annotations](http://docs.grafana.org/features/datasources/influxdb/#annotations)
+
+[Using InfluxDB in Grafana > Annotations](http://docs.grafana.org/features/datasources/influxdb/#annotations).
 
 ### Create the database
 ```bash
