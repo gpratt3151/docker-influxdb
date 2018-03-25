@@ -8,16 +8,26 @@ Docker InfluxDB configuration
 
 [Using InfluxDB in Grafana > Annotations](http://docs.grafana.org/features/datasources/influxdb/#annotations).
 
-### Create the database
+## Create the database
 ```bash
 curl -XPOST "http://localhost:8086/query" --data-urlencode "q=CREATE DATABASE mydb"
 ```
 
-### Insert some data
-Some things to note:
-1. Posting of metric data requires nanoseconds accuracy or at least seconds since epoch + 9 zero's `date +%s%N`
-2. Posting of the "Annotation" cannot be in nanoseconds accuracy and *must* be seconds since epoch `date +%s`
+## Discussion about posting data to InfluxDB
+1. Posting of metric data requires nanoseconds accuracy or at least seconds since epoch + 9 zero's (`date +%s%N`)
+2. Posting of the "Annotation" cannot be in nanoseconds accuracy and *must* be seconds since epoch (`date +%s`)
 
+Here is the difference between `date +%s` and `date +%s%N`:
+```
+1521955132
+1521955132149562816
+```
+If you do not have nanoseconds simply append 9 zeros to the seconds since epoch as follows:
+```
+1521955132000000000
+```
+
+## Insert some data
 ```bash
 curl -XPOST "http://localhost:8086/write?db=mydb" \
 -d 'cpu,host=server01,region=uswest load=42 '$(date +%s%N)
