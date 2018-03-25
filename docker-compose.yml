@@ -1,0 +1,12 @@
+version: '2'
+services:
+  influxdb:
+    build: .
+    image: influxdb
+    container_name: gpratt-influxdb
+    ports:
+      - '8086:8086'
+    volumes:
+      - ./data/influxdb:/var/lib/influxdb/meta
+      - ./data/influxdb:/var/lib/influxdb/data
+      - ./data/influxdb:/var/lib/influxdb/wal
