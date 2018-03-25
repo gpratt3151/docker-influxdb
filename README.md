@@ -96,7 +96,7 @@ The way the following program works is:
 5. This solves the performance problem
 
 ## Recommended Demonstration for Management
-1. Prior to going into your demonstration, start the [script](docker-influxdb/simulate.sh) (preferrably using `screen` in case you get disconnected)
+1. Prior to going into your demonstration, start the [script](simulate.sh) (preferrably using `screen` in case you get disconnected)
 2. Explain to management that users have been complaining about slow performance and that root cause analysis has identifid high CPU on the server 
 3. At this point switch over to the terminal where you have the script running and hit CTRL-C
 4. As described above, the script will step through a simulated upgrade, reboot, patch and final reboot
