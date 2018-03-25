@@ -7,6 +7,6 @@ services:
     ports:
       - '8086:8086'
     volumes:
-      - ./data/influxdb:/var/lib/influxdb/meta
-      - ./data/influxdb:/var/lib/influxdb/data
-      - ./data/influxdb:/var/lib/influxdb/wal
+      - ./data/influxdb/meta:/var/lib/influxdb/meta
+      - ./data/influxdb/data:/var/lib/influxdb/data
+      - ./data/influxdb/wal:/var/lib/influxdb/wal

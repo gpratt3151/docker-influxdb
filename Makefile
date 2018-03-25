@@ -10,8 +10,11 @@ config :
 
 prep :
 	mkdir -p \
-		data/influx \
-		log/influx \
+                data/influxdb \
+		data/influxdb/meta \
+		data/influxdb/data \
+		data/influxdb/wal \
+		log/influxdb \
 
 pull :
 	docker-compose pull
