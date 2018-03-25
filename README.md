@@ -67,25 +67,35 @@ Database: `mydb`
 #### Graph
 ##### Metrics
 Panel Data Source: `mydb`
+
 A `SELECT "load" FROM "cpu" WHERE $timeFilter`  
+
 Format As: `Time Series`
 ##### Display
 Draw Modes: `[x] Lines [x] Points`
+
 Stacking & Null value Null value: `connect`
 
 ### Create the Annotations for the Dashboard
 Select the `Cog` at the top of the page
+
 Select the `Annotations`
 #### Annotations
 ##### Queries
 Options
+
 Name: `Changes`
+
 Data Source: `mydb`
+
 Query: `select title,tags,text from events where $timeFilter`
 
 Field mappings
+
 Title: `title`
+
 Tags: `tags`
+
 Text: `text`
 
 
