@@ -50,3 +50,42 @@ curl -XPOST "http://localhost:8086/write?db=mydb" \
 -d 'cpu,host=server03,region=useast load=13 '$(date +%s%N)
 ```
 
+## Grafana Configuration
+### Create the Data Source
+#### Edit data source
+Name: `mydb`
+Type: `InfluxDB`
+
+##### Http Settings
+Url: `http://IP_ADDRESS:8086`
+Access: `proxy`
+
+##### InfluxDB Details
+Database: `mydb`
+
+### Create the Panel for the Dashboard
+#### Graph
+##### Metrics
+Panel Data Source: `mydb`
+A `SELECT "load" FROM "cpu" WHERE $timeFilter`  
+Format As: `Time Series`
+##### Display
+Draw Modes: `[x] Lines [x] Points`
+Stacking & Null value Null value: `connect`
+
+### Create the Annotations for the Dashboard
+Select the `Cog` at the top of the page
+Select the `Annotations`
+#### Annotations
+##### Queries
+Options
+Name: `Changes`
+Data Source: `mydb`
+Query: `select title,tags,text from events where $timeFilter`
+
+Field mappings
+Title: `title`
+Tags: `tags`
+Text: `text`
+
+
