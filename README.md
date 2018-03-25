@@ -43,17 +43,27 @@ Access: `proxy`
 Database: `mydb`
 
 ### Create the Panel for the Dashboard
-#### Graph
-##### Metrics
-Panel Data Source: `mydb`
+Graph > Metrics
+```
+Panel Data Source: mydb v
 
-A `SELECT "load" FROM "cpu" WHERE $timeFilter`  
+v A FROM      default cpu WHERE +
+    SELECT    field(load) mean() +
+    GROUP BY  time($_interval) fill(null) +
+    FORMAT AS Time series v
+    ALIAS BY  Naming pattern
+```
 
-Format As: `Time Series`
-##### Display
-Draw Modes: `[x] Lines [x] Points`
+Graph > Display
+```
+Draw Modes: 
+  [x] Lines 
+  [x] Points
 
-Stacking & Null value Null value: `connect`
+Stacking & Null value
+  Null value connect v
+```
+
 
 ### Create the Annotations for the Dashboard
 Select the `Cog` at the top of the page
