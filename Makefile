@@ -6,7 +6,7 @@ CONTAINER = gpratt-influxdb
 .PHONY: up
 
 config :
-	docker run --rm influxdb influxd config > influxdb.conf
+	sudo docker run --rm influxdb influxd config > influxdb.conf
 
 prep :
 	mkdir -p \
@@ -17,17 +17,17 @@ prep :
 		log/influxdb \
 
 pull :
-	docker-compose pull
+	sudo docker-compose pull
 
 up : prep pull
-	docker-compose up -d
+	sudo docker-compose up -d
 
 down :
-	docker-compose down
+	sudo docker-compose down
 
 shell :
-	docker exec -ti $(CONTAINER) /bin/bash
+	sudo docker exec -ti $(CONTAINER) /bin/bash
 
 tail :
-	docker logs -f $(CONTAINER)
+	sudo docker logs -f $(CONTAINER)
 
